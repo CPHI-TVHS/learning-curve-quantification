@@ -1,3 +1,13 @@
+suppressPackageStartupMessages(library(tidyverse, quietly=T, warn.conflicts=F))
+suppressPackageStartupMessages(library(gbm, quietly=T, warn.conflicts=F))
+suppressPackageStartupMessages(library(mgcv, quietly=T, warn.conflicts=F))
+suppressPackageStartupMessages(library(parameters, quietly=T, warn.conflicts=F))
+suppressPackageStartupMessages(library(lmtest, quietly=T, warn.conflicts=F))
+suppressPackageStartupMessages(library(minpack.lm, quietly=T, warn.conflicts=F))
+suppressPackageStartupMessages(library(plotly, quietly=T, warn.conflicts=F))
+suppressPackageStartupMessages(library(rpact, quietly=T, warn.conflicts=F))
+suppressPackageStartupMessages(library(optparse, quietly=T, warn.conflicts=F))
+
 parametric.data.management<-function(data, caseIDFieldNM, caseDateFieldNM, outcomeFieldNM, exposureFieldNM, exposureOfInterestNM, orderFieldNM, operatorFieldNM, exposureOfInterestOperatorCaseSeriesFieldNM, covariateFieldNMs, datasetIdentifier, periodIdentifier){
     # Data management for the parametric pipeline-returns simple metrics and a clean/formated dataset for further procesess.
     data <-as.data.frame(data)
@@ -280,8 +290,8 @@ lc_estimate_form<-function(data, sequencer, learningRiskFieldNM, alpha=0.01, pre
         sdf<-as.data.frame(x$coefficients)
         sdf$var<-row.names(sdf)
         sdf<-sdf[c('var', 'Estimate', 'Std. Error', 'Pr(>|t|)')]
-        sdf$lci<-sdf$Estimate-sdf$`Std. Error`
-        sdf$uci<-sdf$Estimate+sdf$`Std. Error`
+        sdf$lci<-sdf$Estimate-(sdf$`Std. Error`*1.96)
+        sdf$uci<-sdf$Estimate+(sdf$`Std. Error`*1.96)
         sdf$ci<-sdf$uci-sdf$lci
         sdf$form<-'power'
         sdf$converged<-pm$convInfo$isConv
@@ -310,8 +320,8 @@ lc_estimate_form<-function(data, sequencer, learningRiskFieldNM, alpha=0.01, pre
         sdf<-as.data.frame(x$coefficients)
         sdf$var<-row.names(sdf)
         sdf<-sdf[c('var', 'Estimate', 'Std. Error', 'Pr(>|t|)')]
-        sdf$lci<-sdf$Estimate-sdf$`Std. Error`
-        sdf$uci<-sdf$Estimate+sdf$`Std. Error`
+        sdf$lci<-sdf$Estimate-(sdf$`Std. Error`*1.96)
+        sdf$uci<-sdf$Estimate+(sdf$`Std. Error`*1.96)
         sdf$ci<-sdf$uci-sdf$lci
         sdf$form<-'weibull'
         sdf$converged<-wm$convInfo$isConv
@@ -340,8 +350,8 @@ lc_estimate_form<-function(data, sequencer, learningRiskFieldNM, alpha=0.01, pre
         sdf<-as.data.frame(x$coefficients)
         sdf$var<-row.names(sdf)
         sdf<-sdf[c('var', 'Estimate', 'Std. Error', 'Pr(>|t|)')]
-        sdf$lci<-sdf$Estimate-sdf$`Std. Error`
-        sdf$uci<-sdf$Estimate+sdf$`Std. Error`
+        sdf$lci<-sdf$Estimate-(sdf$`Std. Error`*1.96)
+        sdf$uci<-sdf$Estimate+(sdf$`Std. Error`*1.96)
         sdf$ci<-sdf$uci-sdf$lci
         sdf$form<-'reciprocal'
         sdf$converged<-rm$convInfo$isConv
@@ -366,8 +376,8 @@ lc_estimate_form<-function(data, sequencer, learningRiskFieldNM, alpha=0.01, pre
         sdf<-as.data.frame(x$coefficients)
         sdf$var<-row.names(sdf)
         sdf<-sdf[c('var', 'Estimate', 'Std. Error', 'Pr(>|t|)')]
-        sdf$lci<-sdf$Estimate-sdf$`Std. Error`
-        sdf$uci<-sdf$Estimate+sdf$`Std. Error`
+        sdf$lci<-sdf$Estimate-(sdf$`Std. Error`*1.96)
+        sdf$uci<-sdf$Estimate+(sdf$`Std. Error`*1.96)
         sdf$ci<-sdf$uci-sdf$lci
         sdf$form<-'exponential'
         sdf$converged<-em$convInfo$isConv
@@ -396,8 +406,8 @@ lc_estimate_form<-function(data, sequencer, learningRiskFieldNM, alpha=0.01, pre
         sdf<-as.data.frame(x$coefficients)
         sdf$var<-row.names(sdf)
         sdf<-sdf[c('var', 'Estimate', 'Std. Error', 'Pr(>|t|)')]
-        sdf$lci<-sdf$Estimate-sdf$`Std. Error`
-        sdf$uci<-sdf$Estimate+sdf$`Std. Error`
+        sdf$lci<-sdf$Estimate-(sdf$`Std. Error`*1.96)
+        sdf$uci<-sdf$Estimate+(sdf$`Std. Error`*1.96)
         sdf$ci<-sdf$uci-sdf$lci
         sdf$form<-'logistic'
         sdf$converged<-lm$convInfo$isConv

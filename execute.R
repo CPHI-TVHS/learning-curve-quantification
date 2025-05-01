@@ -2,15 +2,6 @@ datasetNM<-"sample"
 wdir<-"~/learning-curve-framework"
 setwd(wdir)
 source("functions.R")
-suppressPackageStartupMessages(library(tidyverse, quietly=T, warn.conflicts=F))
-suppressPackageStartupMessages(library(gbm, quietly=T, warn.conflicts=F))
-suppressPackageStartupMessages(library(mgcv, quietly=T, warn.conflicts=F))
-suppressPackageStartupMessages(library(parameters, quietly=T, warn.conflicts=F))
-suppressPackageStartupMessages(library(lmtest, quietly=T, warn.conflicts=F))
-suppressPackageStartupMessages(library(minpack.lm, quietly=T, warn.conflicts=F))
-suppressPackageStartupMessages(library(plotly, quietly=T, warn.conflicts=F))
-suppressPackageStartupMessages(library(rpact, quietly=T, warn.conflicts=F))
-suppressPackageStartupMessages(library(optparse, quietly=T, warn.conflicts=F))
 
 df<-read.csv(file.path(wdir, "data", str_glue("{datasetNM}.csv")))
 covariates <- colnames(df)[startsWith(colnames(df), 'Pt_')]
@@ -39,7 +30,7 @@ output<-PLCAnalysis(
         allowIPTWWeighting=FALSE,
         normalizeIPTWWeights=FALSE,
         useGeneralCovariateFieldNMs=TRUE,
-        iptwCovariateFieldNMs=c(), # Use these instead of "useGeneralCovariateFieldNMs=FALSE"
+        iptwCovariateFieldNMs=c(), 
         #==========================================
         # Part 4: GAM Modelling
         #==========================================    
